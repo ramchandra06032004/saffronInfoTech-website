@@ -1,0 +1,33 @@
+.homePage-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    gap: 3rem;
+}
+
+.heroLine {
+    font-family: "Playfair Display", serif;
+}
+
+.heroImage {
+    width: 30vw;
+    height: 55vh;
+    border-radius: 1.5rem;
+}
+
+.vision {
+    width: 45vw;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
+
+}
+
+.border-radius-Image {
+    border-radius: 2rem;
+}
