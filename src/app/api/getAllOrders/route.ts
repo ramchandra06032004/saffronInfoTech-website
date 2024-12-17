@@ -18,8 +18,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({error:"Unauthorized"},{status:401})
         }
         
-        const {id}=await request.json();
-        const orders = await Orders.find({ _id: { $in: id } });
+        const {orderIds}=await request.json();
+        console.log(orderIds);
+        
+        const orders = await Orders.find({ _id: { $in: orderIds } });
         return NextResponse.json(orders, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

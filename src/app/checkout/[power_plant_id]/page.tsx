@@ -14,6 +14,14 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface Product {
   _id: string;
@@ -35,11 +43,14 @@ interface PowerPlant {
 }
 
 const CheckoutPage = () => {
+  const [date, setDate] = useState<Date | undefined>(undefined);
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [powerPlant, setPowerPlant] = useState<PowerPlant | null>(null);
   const [loading, setLoading] = useState(false);
+  const [paymentMode, setPaymentMode] = useState<string>("Cash");
   const { toast } = useToast();
   const { power_plant_id } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,8 +95,41 @@ const CheckoutPage = () => {
 
   const { subtotal, gst, total } = calculateTotalPrice();
 
+  const handlePlaceOrder = async () => {
+    try {
+      const payload = {
+        preferedDate: date?.toISOString(), // Ensure the date is correctly formatted
+        powerPlantId: power_plant_id,
+        type: "Service",
+        paymentMode: paymentMode,
+        amount: total, // Include the amount in the payload
+      };
+      console.log(payload);
+
+      const response = await axios.post("/api/confermOrder", payload);
+      console.log("Order placed successfully", response.data);
+
+      toast({
+        title: "Order placed successfully!",
+        description: "Your order has been placed.",
+      });
+     
+      
+      router.push("/profile");
+    } catch (error: any) {
+      console.log(error);
+      
+      toast({
+        title: "Order placement failed!",
+        description:
+          error.response?.data?.error ||
+          "An error occurred while placing the order.",
+      });
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center  py-2">
+    <div className="flex flex-col items-center justify-center py-2">
       <Toaster />
       <h1 className="text-3xl mb-6 text-center">Checkout</h1>
       {loading ? (
@@ -94,15 +138,12 @@ const CheckoutPage = () => {
         <div className="flex flex-col w-full max-w-xl gap-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-center"> Selected Plans
-
-              </CardTitle>
-
+              <CardTitle className="text-xl text-center">Selected Plans</CardTitle>
             </CardHeader>
             <CardContent>
               {cartItems.map((product) => (
                 <div key={product._id} className="mb-4">
-                  <h2 className="text-lg font-bold ">{product.name}</h2>
+                  <h2 className="text-lg font-bold">{product.name}</h2>
                   <p>{product.description}</p>
                   <p>Price: ₹{product.price}</p>
                   <p>In Stock: {product.countInStock}</p>
@@ -135,8 +176,70 @@ const CheckoutPage = () => {
               <p>Total: ₹{total.toFixed(2)}</p>
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                Preferred Date for Service
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[280px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={(day) => setDate(day ?? undefined)}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Payment Mode</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup value={paymentMode} onValueChange={setPaymentMode}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Cash" id="cash" />
+                  <Label htmlFor="cash">Cash</Label>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
           <div className="flex justify-center mt-4">
-            <Button>Proceed to Payment</Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button>Place Order</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Confirm Order</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to place this order?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handlePlaceOrder}>
+                    Confirm
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       )}

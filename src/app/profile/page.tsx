@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+
 
 const ProfilePage = () => {
   const { toast } = useToast();
@@ -24,7 +24,32 @@ const ProfilePage = () => {
             orderIds: response.data.orders,
           });
           if (ordersResponse.status === 200) {
-            setOrders(ordersResponse.data);
+            const ordersData = ordersResponse.data;
+
+            // Fetch power plant data for each order
+            const powerPlantIds = ordersData.map((order: any) => order.powerPlant);
+            const powerPlantResponse = await axios.post('/api/getPowerPlant', {
+              powerPlantIds,
+            });
+
+            if (powerPlantResponse.status === 200) {
+              const powerPlants = powerPlantResponse.data;
+              const ordersWithPowerPlantDetails = ordersData.map((order: any) => {
+                const powerPlant = powerPlants.find((pp: any) => pp._id === order.powerPlant);
+                return {
+                  ...order,
+                  powerPlantDetails: powerPlant,
+                };
+              });
+
+              setOrders(ordersWithPowerPlantDetails);
+            } else {
+              toast({
+                title: 'Error',
+                description: powerPlantResponse.data.error,
+              
+              });
+            }
           } else {
             toast({
               title: 'Error',
@@ -59,7 +84,6 @@ const ProfilePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-3xl font-bold">Profile</h1>
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <div className="flex items-center space-x-4">
@@ -68,10 +92,9 @@ const ProfilePage = () => {
               <AvatarFallback>{userData?.name?.charAt(0) || "CN"}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-2xl">{userData?.userName}</CardTitle>
+              <CardTitle className="text-2xl">{userData?.name}</CardTitle>
               <p className="text-gray-600">{userData?.email}</p>
             </div>
-
           </div>
         </CardHeader>
         <CardContent>
@@ -83,9 +106,18 @@ const ProfilePage = () => {
                   <CardTitle>Order ID: {order._id}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>Order Date: {new Date(order.date).toLocaleDateString()}</p>
-                  <p>Total Amount: ₹{order.totalAmount}</p>
-                  <Button variant="outline" className="mt-2">View Details</Button>
+                  <p>Order Date: {new Date(order.orderDate).toLocaleDateString()}</p>
+                  <p>Preferred Date: {new Date(order.preferedDate).toLocaleDateString()}</p>
+                  <p>Order Status: {order.orderStatus}</p>
+                  <p>Amount: ₹{order.amount}</p>
+                  <p>Type: {order.type}</p>
+                  <p>Payment Mode: {order.paymentMode}</p>
+                  <h3 className="text-lg font-bold mt-4">Power Plant Details</h3>
+                  <p>Government ID: {order.powerPlantDetails.govId}</p>
+                  <p>Name of Owner: {order.powerPlantDetails.nameOfOwner}</p>
+                  <p>Mobile Number: {order.powerPlantDetails.mobileNumber}</p>
+                  <p>Address: {order.powerPlantDetails.address}</p>
+                  <p>Capacity: {order.powerPlantDetails.capacity} KW</p>
                 </CardContent>
               </Card>
             ))

@@ -15,6 +15,10 @@ const orderSchema=new mongoose.Schema({
         default:"pending",
         enum:["pending","completed","cancelled","accepted"]
     },
+    amount:{
+        type:Number,
+        required:true
+    },
     preferedDate:{
         type:Date,
         required:true
@@ -28,7 +32,12 @@ const orderSchema=new mongoose.Schema({
         type:String,
         required:true,
         enum:["Service","Installation"]
-    }
+    },
+    paymentMode:{
+        type:String,
+        required:true,
+        enum:["Online","Cash"]
+    },
 })
 
 const Orders=(mongoose.models.Orders)||(mongoose.model("Orders",orderSchema))
