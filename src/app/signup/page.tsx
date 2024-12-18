@@ -28,7 +28,7 @@ export default function SignupPage() {
     try {
       setLoading(true);
       console.log("Attempting to signup...");
-      const response = await axios.post("/api/sign-up", user);
+      const response = await axios.post("/api/sign-up", user,{ timeout: 60000 });
       console.log("Signup success", response.data);
       
       
