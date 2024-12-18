@@ -7,6 +7,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
+interface SignupResponse {
+  success: boolean;
+  message: string;
+  _id?: string;
+}
+
+interface ErrorResponse {
+  success: boolean;
+  message: string;
+}
+
 export default function SignupPage() {
   const router = useRouter();
   const [user, setUser] = useState({ email: "", password: "", userName: "" });
@@ -28,21 +39,19 @@ export default function SignupPage() {
 
       router.push(`/verify/${response.data._id}`);
     } catch (error: any) {
-      console.error('Error during sign-up:', error);
+      console.error("Error during sign-up:", error);
 
-      const axiosError = error as AxiosError;
-      if (axiosError.response) {
-
+      const axiosError = error as AxiosError<ErrorResponse>;
+      if (axiosError.response?.data?.success === false) {
         toast({
           title: "Sign-up failed",
-          
-        })
-        
+          description: axiosError.response?.data?.message,
+        });
       } else {
         toast({
           title: "Sign-up failed",
           description: "An unexpected error occurred. Please try again later.",
-        })
+        });
       }
     } finally {
       setLoading(false);
