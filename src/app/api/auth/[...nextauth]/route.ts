@@ -1,10 +1,10 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { dbConnect } from '@/dbConfig/dbConnect';
 import User from '@/models/userModel';
 
-export const authOptions: NextAuthOptions = {
+const authOptions = {
   providers: [
     CredentialsProvider({
       id: 'credentials',
@@ -73,4 +73,5 @@ export const authOptions: NextAuthOptions = {
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };
