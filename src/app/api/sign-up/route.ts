@@ -9,6 +9,8 @@ export async function POST(request: Request) {
   await dbConnect();
 
   try {
+    console.log("db connect and try block");
+    
     const { userName, email, password } = await request.json();
 
     const existingVerifiedUserByUsername = await User.findOne({

@@ -35,6 +35,7 @@ export default function SignupPage() {
 
         toast({
           title: "Sign-up failed",
+          
         })
         
       } else {
