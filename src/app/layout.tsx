@@ -2,6 +2,7 @@
 import "../app/globals.css"; // Import Tailwind CSS
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
 export default function RootLayout({
@@ -15,6 +16,7 @@ export default function RootLayout({
         <body className="dark">
           <Navbar />
           {children}
+          <Footer />
           <Toaster />
         </body>
       </SessionProvider>

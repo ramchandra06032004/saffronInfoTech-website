@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
-import { toast } from "react-hot-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,23 +12,36 @@ export default function SignupPage() {
   const [user, setUser] = useState({ email: "", password: "", userName: "" });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const {toast} = useToast();
   const onSignup = async () => {
     try {
       setLoading(true);
       console.log("Attempting to signup...");
       const response = await axios.post("/api/sign-up", user);
       console.log("Signup success", response.data);
-      toast.success("Signup successful");
+      
+      
+      toast({
+        title: "Sign-up successful",
+        description: "Please verify your email address to complete the registration.",
+      })
+
       router.push(`/verify/${response.data._id}`);
     } catch (error: any) {
       console.error('Error during sign-up:', error);
 
       const axiosError = error as AxiosError;
       if (axiosError.response) {
-        toast.error(axiosError.response.data.message);
+
+        toast({
+          title: "Sign-up failed",
+        })
+        
       } else {
-        toast.error(error.message);
+        toast({
+          title: "Sign-up failed",
+          description: "An unexpected error occurred. Please try again later.",
+        })
       }
     } finally {
       setLoading(false);

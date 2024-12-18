@@ -28,13 +28,16 @@ function Navbar() {
         Saffron RenewTech
         </Link>
         <div className="flex space-x-4">
-          <Link href="/about">
-            <Button variant="ghost" >About</Button>
+          <Link href="/services">
+            <Button variant="ghost" >
+              Services
+
+            </Button>
           </Link>
           <Link href="/products">
             <Button variant="ghost">Products</Button>
           </Link>
-          <Link href="/contact">
+          <Link href="/projects">
             <Button variant="ghost">Projects</Button>
           </Link>
           
