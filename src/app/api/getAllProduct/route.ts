@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const products = await Product.find({});
     return NextResponse.json(products, { status: 200 });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    
+    return NextResponse.json({ error: "Error in fetching all products" }, { status: 500 });
   }
 }

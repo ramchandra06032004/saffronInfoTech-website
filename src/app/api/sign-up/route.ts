@@ -7,11 +7,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   await dbConnect();
-
+  console.log("connected to db");
+  
+  
   try {
     
     const { userName, email, password } = await request.json();
-    
+
     const existingVerifiedUserByUsername = await User.findOne({
       userName,
       isVerified: true,
