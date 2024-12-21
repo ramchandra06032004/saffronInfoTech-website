@@ -4,8 +4,9 @@
     justify-content: center;
     align-items: center;
     gap: 3rem;
-    padding: 2rem; 
+    padding: 1rem;
     min-height: 100vh;
+    max-width: 90vw;
 }
 
 .heroLine {
@@ -13,18 +14,15 @@
 }
 
 .heroImage {
-    width: 100%; 
     
-    height: auto; 
+    
+    
     border-radius: 1.5rem;
 }
 
 .vision {
-    width: 100%; 
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    
+    
     font-family: "Karla", sans-serif;
     font-optical-sizing: auto;
 }
