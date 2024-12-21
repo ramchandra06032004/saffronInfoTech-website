@@ -34,7 +34,7 @@ const AdminOrdersPage = () => {
                 const powerPlant = powerPlantResponse.data[0];
                 
                 
-                console.log(user);
+                
                 
                 
                 return {

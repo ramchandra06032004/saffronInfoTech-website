@@ -104,10 +104,10 @@ const CheckoutPage = () => {
         paymentMode: paymentMode,
         amount: total, // Include the amount in the payload
       };
-      console.log(payload);
+      
 
       const response = await axios.post("/api/confermOrder", payload);
-      console.log("Order placed successfully", response.data);
+      
 
       toast({
         title: "Order placed successfully!",
@@ -117,7 +117,7 @@ const CheckoutPage = () => {
       
       router.push("/profile");
     } catch (error: any) {
-      console.log(error);
+      
       
       toast({
         title: "Order placement failed!",

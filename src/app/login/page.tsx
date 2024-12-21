@@ -16,14 +16,14 @@ export default function LoginPage() {
   const onLogin = async () => {
     try {
       setLoading(true);
-      console.log("Attempting to login...");
+      
       const response = await signIn("credentials", {
         redirect: false,
         email: user.email,
         password: user.password,
       });
 
-      console.log("Login response:", response);
+      
 
       if (response?.error) {
         toast({
@@ -33,11 +33,11 @@ export default function LoginPage() {
         toast({
           title: "Login successful",
         })
-        console.log("Redirecting to /dashboard...");
+        
         router.push("/"); // Use router.push instead of router.replace
       }
     } catch (error: any) {
-      console.log("Login failed", error.message);
+
       toast({
         title: error.message,
         })

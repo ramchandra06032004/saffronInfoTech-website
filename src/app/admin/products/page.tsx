@@ -45,7 +45,6 @@ export default function ProductsPage() {
 
   const handleDelete = async (productId :any) => {
     setLoading(true);
-    console.log("function called");
     
     try {
       await axios.delete("/api/delete-product", { data: { productId } });
@@ -109,7 +108,7 @@ export default function ProductsPage() {
                         variant="destructive"
                         onClick={() => {
                           if (selectedProduct) {
-                            console.log("delete function called");
+                            
                             
                             handleDelete(selectedProduct._id);
                             setSelectedProduct(null);
