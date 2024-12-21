@@ -1,1 +1,3 @@
 change email in resend 
+
+make website responcive

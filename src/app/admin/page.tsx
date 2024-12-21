@@ -10,7 +10,7 @@ const AdminPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <h1 className="text-3xl mb-6 text-center">Admin Dashboard</h1>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 flex-col gap-4 ">
         <Link href="/admin/add-product">
           <Button>Add New Product</Button>
         </Link>
