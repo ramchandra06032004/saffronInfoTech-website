@@ -9,9 +9,9 @@ export async function sendVerificationEmail(
   try {    
     
     await resend.emails.send({
-      from: 'rajumulik51@gmail.com',
+      from: 'onboarding@resend.dev',
       to: email,
-      subject: 'Solar Power Plant Verification',
+      subject: 'Verification Email for Saffron RenewTech ',
       react: VerificationEmail({ username, otp: verifyCode }),
     });
     return { success: true, message: 'Verification email sent successfully.' };
