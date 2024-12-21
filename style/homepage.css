@@ -1,9 +1,11 @@
 .homePage-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height: 90vh;
     gap: 3rem;
+    padding: 2rem; 
+    min-height: 100vh;
 }
 
 .heroLine {
@@ -11,21 +13,20 @@
 }
 
 .heroImage {
-    width: 30vw;
-    height: 55vh;
+    width: 100%; 
+    
+    height: auto; 
     border-radius: 1.5rem;
 }
 
 .vision {
-    width: 45vw;
-    height: 65vh;
+    width: 100%; 
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
     font-family: "Karla", sans-serif;
     font-optical-sizing: auto;
-
 }
 
 .border-radius-Image {

@@ -37,18 +37,18 @@ const ServicesPage = () => {
       <h1 className="text-3xl font-bold mb-8 text-center">Our Services</h1>
       <div className="flex flex-col gap-8 justify-center items-center">
         {services.map((service, index) => (
-          <Card key={index} className="shadow-lg w-2/4">
+          <Card key={index} className="shadow-lg m-4">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">{service.title}</CardTitle>
             </CardHeader>
             
             <CardContent className='flex justify-center'>
-              <img src={service.Image} alt="" className='h-1/3 w-2/4 rounded-lg'/>
+              <img src={service.Image} alt="" className='h-1/3 w-3/4 rounded-lg'/>
               
             </CardContent>
 
             <CardContent>
-              <p>{service.description}</p>
+              <p className='text-center'>{service.description}</p>
             </CardContent>
           </Card>
         ))}

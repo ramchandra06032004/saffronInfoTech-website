@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
-        <body className="dark">
+        <body className="dark ">
           <Navbar />
           {children}
           <Footer />

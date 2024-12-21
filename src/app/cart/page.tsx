@@ -91,9 +91,11 @@ const CartPage = () => {
         {loading ? (
           <p>Loading...</p>
         ) : cartItems.length === 0 ? (
-          <p className="text-xl text-center text-gray-900 dark:text-gray-100">Your cart is empty</p>
+          <p className="text-xl text-center text-gray-900 dark:text-gray-100">
+            Your cart is empty
+          </p>
         ) : (
-          <>
+          <div>
             <div className="flex flex-col items-center justify-center py-2">
               <div className="md:grid-cols-2 lg:grid-cols-3">
                 {cartItems.map((product) => (
@@ -120,14 +122,14 @@ const CartPage = () => {
               </div>
             </div>
 
-            <Card>
+            <Card className="">
               <CardHeader>
-                <CardTitle>Price Estimate</CardTitle>
+                <CardTitle className="text-green-600">Price Estimate</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Subtotal: ₹{subtotal.toFixed(2)}</p>
-                <p>GST (18%): ₹{gst.toFixed(2)}</p>
-                <p>Total: ₹{total.toFixed(2)}</p>
+                <p className="text-green-600">Subtotal: ₹{subtotal.toFixed(2)}</p>
+                <p className="text-green-600">GST (18%): ₹{gst.toFixed(2)}</p>
+                <p className="text-green-600" >Total: ₹{total.toFixed(2)}</p>
               </CardContent>
               <CardFooter className="flex justify-center">
                 <Button>
@@ -135,7 +137,7 @@ const CartPage = () => {
                 </Button>
               </CardFooter>
             </Card>
-          </>
+          </div>
         )}
       </div>
     </>

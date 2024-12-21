@@ -91,14 +91,14 @@ const ProjectsPage = () => {
       <h1 className="text-3xl font-bold mb-8 text-center">Our Projects</h1>
       <div className="flex flex-col gap-8">
         {projects.map((project, index) => (
-          <Card key={index} className="shadow-lg">
+          <Card key={index} className="shadow-lg mx-4">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">{project.siteName}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-400 mb-2">{project.address}</p>
               <p className="text-gray-400 mb-4">{new Date(project.date).toLocaleDateString()}</p>
-              <div className="flex flex-wrap gap-4 justify-center">
+              <div className="flex flex-wrap gap-4 justify-center ">
                 {project.images.map((image, imgIndex) => (
                   <Image key={imgIndex} src={image.src} alt={image.alt} className="rounded-lg w-1/4 " />
                 ))}
