@@ -80,7 +80,7 @@ export default function VerifyPage() {
                       </InputOTP>
                     </FormControl>
                     <FormDescription>
-                      Please enter the one-time password sent to your Mobile.
+                      Please enter the one-time password sent to your Email.
                     </FormDescription>
                     {form.formState.errors.pin && <FormMessage>{form.formState.errors.pin.message}</FormMessage>}
                   </FormItem>

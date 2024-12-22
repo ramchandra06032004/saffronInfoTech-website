@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 interface SignupResponse {
   success: boolean;
@@ -112,9 +113,14 @@ export default function SignupPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center mt-4">
+        <CardFooter className="flex flex-col gap-2 justify-center mt-4">
           <Button onClick={() => router.push("/login")}>
             Already have an account? Log in
+          </Button>
+          <Button>
+            <Link href="/forgotPassword">
+            Forgot password
+            </Link>
           </Button>
         </CardFooter>
       </Card>

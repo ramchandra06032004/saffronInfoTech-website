@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -98,12 +99,18 @@ export default function LoginPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center mt-4">
+        <CardFooter className="flex flex-col gap-2 justify-center mt-4">
           <Button
             
             onClick={() => router.push("/signup")}
           >
             Not a member? Sign up
+          </Button>
+
+          <Button>
+            <Link href="/forgotPassword">
+            Forgot password
+            </Link>
           </Button>
         </CardFooter>
       </Card>
