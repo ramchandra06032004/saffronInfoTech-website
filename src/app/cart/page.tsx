@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import SkeletonComp from "@/components/SkeletonCompBody";
 import {
   Card,
   CardHeader,
@@ -12,6 +13,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Product {
   _id: string;
@@ -48,7 +50,8 @@ const CartPage = () => {
             error.response?.data?.message ||
             "An error occurred while fetching cart items.",
         });
-      } finally {
+      }
+      finally{
         setLoading(false);
       }
     };
@@ -89,7 +92,7 @@ const CartPage = () => {
       <div className="flex items-center justify-center py-2 gap-3">
         <Toaster />
         {loading ? (
-          <p>Loading...</p>
+          <SkeletonComp />
         ) : cartItems.length === 0 ? (
           <p className="text-xl text-center text-gray-900 dark:text-gray-100">
             Your cart is empty
@@ -127,9 +130,11 @@ const CartPage = () => {
                 <CardTitle className="text-green-600">Price Estimate</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-green-600">Subtotal: ₹{subtotal.toFixed(2)}</p>
+                <p className="text-green-600">
+                  Subtotal: ₹{subtotal.toFixed(2)}
+                </p>
                 <p className="text-green-600">GST (18%): ₹{gst.toFixed(2)}</p>
-                <p className="text-green-600" >Total: ₹{total.toFixed(2)}</p>
+                <p className="text-green-600">Total: ₹{total.toFixed(2)}</p>
               </CardContent>
               <CardFooter className="flex justify-center">
                 <Button>

@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SkeletonComp from "@/components/SkeletonCompBody";
 
 interface PowerPlant {
   _id: string;
@@ -68,7 +69,9 @@ const PowerPlantPage = () => {
       <Toaster />
       <h1 className="text-3xl mb-6 text-center">Power Plants</h1>
       {loading ? (
-        <p>Loading...</p>
+        <p>
+          <SkeletonComp />
+        </p>
       ) : (
         <div>
           <RadioGroup value={selectedPowerPlant} onValueChange={handleSelect}>
