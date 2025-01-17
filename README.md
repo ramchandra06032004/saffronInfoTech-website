@@ -16,7 +16,7 @@ Make sure you have the following installed on your machine:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/solar-app.git
+git clone https://github.com/ramchandra06032004/saffronInfoTech-website.git
 cd solar-app
 ```
 ```bash
