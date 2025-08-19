@@ -20,6 +20,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "All fields are required" }, { status: 400 });
   }
 
+  const numericCapacity = Number(capacity);
+
+  if (isNaN(numericCapacity) || !Number.isInteger(numericCapacity)) {
+    return NextResponse.json({ error: "Capacity must be a valid integer in KW" }, { status: 400 });
+  }
+
   try {
     // Create a new power plant document
     const newPowerPlant = new PowerPlant({
@@ -27,9 +33,9 @@ export async function POST(request: NextRequest) {
       nameOfOwner,
       mobileNumber,
       address,
-      capacity,
+      capacity: numericCapacity,
     });
-
+    
     await newPowerPlant.save();
 
     // Update the user's solarPowerPlants array

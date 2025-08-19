@@ -44,7 +44,6 @@ const AddPowerPlantPage = () => {
 
     try {
       const response = await axios.post("/api/addPowerPlant", data);
-
       toast({
         title: "Power plant added",
         description: "The power plant has been added successfully.",
@@ -56,7 +55,7 @@ const AddPowerPlantPage = () => {
     } catch (error: any) {
       toast({
         title: "Error adding power plant",
-        description: error.response?.data?.message || "An error occurred while adding the power plant.",
+        description: error.response?.data?.error || "An error occurred while adding the power plant.",
       });
     } finally {
       setLoading(false);

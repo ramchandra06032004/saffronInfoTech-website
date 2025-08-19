@@ -82,7 +82,7 @@ const PowerPlantPage = () => {
                   <p>Name of Owner: {powerPlant.nameOfOwner}</p>
                   <p>Mobile Number: {powerPlant.mobileNumber}</p>
                   <p>Address: {powerPlant.address}</p>
-                  <p>Capacity: {powerPlant.capacity}</p>
+                  <p>Capacity: {powerPlant.capacity} KW</p>
                   <div className="flex items-center space-x-2 mt-4">
                     <RadioGroupItem value={powerPlant._id} id={powerPlant._id} />
                     <Label htmlFor={powerPlant._id}>Select</Label>

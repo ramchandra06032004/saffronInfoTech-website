@@ -1,7 +1,7 @@
 //route for find user by email
 
 import { dbConnect } from "@/dbConfig/dbConnect";
-import { sendVerificationEmail } from "@/helpers/sendOtpMail";
+import { mailJetSendVerificationMail } from "@/helpers/sendOtpMail";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,13 +22,13 @@ export async function POST(request:NextRequest){
         user.expiryTimeResetPassword=new Date(Date.now() + 3600000);
 
         await user.save();
-        const emailResponse = await sendVerificationEmail(
+        const emailResponse :any = await mailJetSendVerificationMail(
               email,
               user.userName,
               user.resetPasswordCode
             );
 
-        if (!emailResponse) {
+        if (emailResponse.Messages[0].Status !== 'success') {
             return NextResponse.json({
                 success:false,
                 message:"Email not sent"

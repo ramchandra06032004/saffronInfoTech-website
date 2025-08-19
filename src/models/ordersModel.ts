@@ -38,6 +38,23 @@ const orderSchema=new mongoose.Schema({
         required:true,
         enum:["Online","Cash"]
     },
+    product:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Product",
+        required:true
+    },
+    paymentRecipt:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"PaymentRecipt"
+    },
+    razorpay_payment_id:{
+        type:String,
+        required:true
+    },
+    razorpay_order_id:{
+        type:String,
+        required:true
+    }
 })
 
 const Orders=(mongoose.models.Orders)||(mongoose.model("Orders",orderSchema))

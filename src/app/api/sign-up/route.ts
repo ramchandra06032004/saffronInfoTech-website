@@ -1,15 +1,13 @@
 import { dbConnect } from '@/dbConfig/dbConnect';
 import User from '@/models/userModel';
 import bcrypt from 'bcryptjs';
-import { sendVerificationEmail } from '@/helpers/sendOtpMail';
+import { mailJetSendVerificationMail } from '@/helpers/sendOtpMail';
 import { log } from 'node:console';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   await dbConnect();
-  console.log("connected to db");
-  
-  
+    
   try {
     
     const { userName, email, password } = await request.json();
@@ -68,12 +66,13 @@ export async function POST(request: Request) {
     }
 
     // Send verification email
-    const emailResponse = await sendVerificationEmail(
+    const emailResponse:any = await mailJetSendVerificationMail(
       email,
       userName,
       verifyCode
     );
-    if (!emailResponse.success) {
+    
+    if (emailResponse.Messages[0].Status !== 'success') {
       return Response.json(
         {
           success: false,

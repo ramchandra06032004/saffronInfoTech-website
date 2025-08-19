@@ -31,7 +31,6 @@ function Navbar() {
       toast.success('Logout successful');
       router.push('/login');
     } catch (error: any) {
-      console.log("Logout error:", error.message);
       toast.error(error.message);
     }
   };
