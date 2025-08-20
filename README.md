@@ -1,44 +1,67 @@
 # Solar Power Plant Service Booking
 
-Welcome to the Solar Power Plant Service Booking website! This project is built with [Next.js](https://nextjs.org) and allows users to book services for solar power plant installations and maintenance.
+Welcome to the Solar Power Plant Service Booking website! # Saffron InfoTech Website
+
+This is the official website for Saffron InfoTech, a company specializing in renewable energy solutions.
 
 ## Getting Started
 
+Follow these steps to set up the project locally for development and testing.
+
 ### Prerequisites
 
-Make sure you have the following installed on your machine:
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
 
-- Node.js (>= 14.x)
-- npm (>= 6.x) or yarn (>= 1.x)
+### 1. Clone the Repository
 
-### Installation
-
-1. Clone the repository:
+First, clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/ramchandra06032004/saffronInfoTech-website.git
-cd solar-app
+cd saffronInfoTech-website
 ```
+
+### 2. Set Up Environment Variables
+
+Create a `.env` file in the root of the project directory. Copy the contents of `.env.example` (if it exists) or use the template below. Replace the placeholder values with your actual credentials.
+
+```properties
+# MongoDB Connection String
+MONGO_URI="your_mongodb_connection_string"
+
+# NextAuth Secret for session encryption
+NEXTAUTH_SECRET="your_super_secret_key"
+
+# Mailjet API Keys for sending emails
+MJ_APIKEY_PUBLIC="your_mailjet_public_key"
+MJ_APIKEY_PRIVATE="your_mailjet_private_key"
+
+# Resend API Key (alternative email service)
+RESEND_API_KEY="your_resend_api_key"
+
+# Razorpay API Keys for payments
+YOUR_KEY_ID="your_razorpay_key_id"
+YOUR_KEY_SECRET="your_razorpay_key_secret"
+```
+
+### 3. Install Dependencies
+
+Install the required npm packages:
+
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
+
+### 4. Run the Development Server
+
+Start the Next.js development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
 
 
