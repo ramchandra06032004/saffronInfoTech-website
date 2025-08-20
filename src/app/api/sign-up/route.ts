@@ -2,7 +2,6 @@ import { dbConnect } from '@/dbConfig/dbConnect';
 import User from '@/models/userModel';
 import bcrypt from 'bcryptjs';
 import { mailJetSendVerificationMail } from '@/helpers/sendOtpMail';
-import { log } from 'node:console';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -91,7 +90,6 @@ export async function POST(request: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error registering user:', error);
     return Response.json(
       {
         success: false,

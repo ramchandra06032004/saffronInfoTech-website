@@ -35,7 +35,6 @@ export default function Page() {
                 });
             }
         } catch (error: any) {
-            console.error("Error:", error);
             toast({
                 title: "Error",
                 description: "An error occurred. Please try again.",

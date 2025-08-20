@@ -1,58 +1,43 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SkeletonComp from "@/components/SkeletonCompBody";
-
-interface PowerPlant {
-  _id: string;
-  govId: string;
-  nameOfOwner: string;
-  mobileNumber: string;
-  address: string;
-  capacity: string;
-}
-
+import { fetchData } from "./Service/fetData";
+import { PowerPlant } from "@/types/customTypes";
+import { useToast } from "@/hooks/use-toast";
 const PowerPlantPage = () => {
   const [powerPlants, setPowerPlants] = useState<PowerPlant[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedPowerPlant, setSelectedPowerPlant] = useState<
+    string | undefined
+  >(undefined);
   const { toast } = useToast();
-  const [selectedPowerPlant, setSelectedPowerPlant] = useState<string | undefined>(undefined);
   const router = useRouter();
-
   useEffect(() => {
     const fetchPowerPlants = async () => {
       setLoading(true);
       try {
-        // Get user data
-        const userResponse = await axios.get("/api/getUserData");
-        const { solarPowerPlants } = userResponse.data;
-
-        // Get power plant data
-        const powerPlantResponse = await axios.post("/api/getPowerPlant", {
-          powerPlantIds: solarPowerPlants,
-        });
-        setPowerPlants(powerPlantResponse.data);
+        await fetchData(setPowerPlants);
+        
       } catch (error: any) {
         toast({
-          title: "Error fetching power plants",
-          description: error.response?.data?.message || "An error occurred while fetching power plants.",
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
         });
       } finally {
         setLoading(false);
       }
     };
-
     fetchPowerPlants();
-  }, [toast]);
+  }, []);
 
   const handleSelect = (value: string) => {
     setSelectedPowerPlant(value);
@@ -84,7 +69,10 @@ const PowerPlantPage = () => {
                   <p>Address: {powerPlant.address}</p>
                   <p>Capacity: {powerPlant.capacity} KW</p>
                   <div className="flex items-center space-x-2 mt-4">
-                    <RadioGroupItem value={powerPlant._id} id={powerPlant._id} />
+                    <RadioGroupItem
+                      value={powerPlant._id}
+                      id={powerPlant._id}
+                    />
                     <Label htmlFor={powerPlant._id}>Select</Label>
                   </div>
                 </CardContent>

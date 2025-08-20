@@ -6,6 +6,9 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import SkeletonComp from "@/components/SkeletonCompBody";
 import SkeletonCompUser from "@/components/SkeletonCompUser";
+import { fetchUserData } from "@/repoLayer/fetchUserData";
+import { fetchAllOrders } from "@/repoLayer/fetchAllOrders";
+import { fetchSolarPowerPlant } from "@/repoLayer/fetchPowerPlant";
 
 const ProfilePage = () => {
   const { toast } = useToast();
@@ -14,60 +17,25 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetch = async () => {
       try {
-        const response = await axios.get("/api/getUserData");
-        if (response.status === 200) {
-          setUserData(response.data);
-
-          // Fetch orders data
-          const ordersResponse = await axios.post("/api/getAllOrders", {
-            orderIds: response.data.orders,
-          });
-          if (ordersResponse.status === 200) {
-            const ordersData = ordersResponse.data;
-
-            // Fetch power plant data for each order
-            const powerPlantIds = ordersData.map(
-              (order: any) => order.powerPlant
-            );
-            const powerPlantResponse = await axios.post("/api/getPowerPlant", {
-              powerPlantIds,
-            });
-
-            if (powerPlantResponse.status === 200) {
-              const powerPlants = powerPlantResponse.data;
-              const ordersWithPowerPlantDetails = ordersData.map(
-                (order: any) => {
-                  const powerPlant = powerPlants.find(
-                    (pp: any) => pp._id === order.powerPlant
-                  );
-                  return {
-                    ...order,
-                    powerPlantDetails: powerPlant,
-                  };
-                }
-              );
-
-              setOrders(ordersWithPowerPlantDetails);
-            } else {
-              toast({
-                title: "Error",
-                description: powerPlantResponse.data.error,
-              });
-            }
-          } else {
-            toast({
-              title: "Error",
-              description: ordersResponse.data.error,
-            });
-          }
-        } else {
-          toast({
-            title: "Error",
-            description: response.data.error,
-          });
-        }
+        const response = await fetchUserData();
+        setUserData(response);
+        const ordersResponse: any = await fetchAllOrders(response.orders);
+        const ordersData = ordersResponse;
+        const powerPlantIds = ordersData.map((order: any) => order.powerPlant);
+        const powerPlantResponse = await fetchSolarPowerPlant(powerPlantIds);
+        const powerPlants = powerPlantResponse;
+        const ordersWithPowerPlantDetails = ordersData.map((order: any) => {
+          const powerPlant = powerPlants.find(
+            (pp: any) => pp._id === order.powerPlant
+          );
+          return {
+            ...order,
+            powerPlantDetails: powerPlant,
+          };
+        });
+        setOrders(ordersWithPowerPlantDetails);
       } catch (error: any) {
         toast({
           title: "Error",
@@ -79,7 +47,7 @@ const ProfilePage = () => {
       }
     };
 
-    fetchUserData();
+    fetch();
   }, [toast]);
 
   return (

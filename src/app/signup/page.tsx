@@ -38,7 +38,6 @@ export default function SignupPage() {
 
       router.push(`/verify/${response.data._id}`);
     } catch (error: any) {
-      console.error("Error during sign-up:", error);
 
       const axiosError = error as AxiosError<ErrorResponse>;
       if (axiosError.response?.data?.success === false) {

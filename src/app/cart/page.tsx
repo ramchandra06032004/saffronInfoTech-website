@@ -13,17 +13,10 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
-import { Skeleton } from "@/components/ui/skeleton";
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  countInStock: number;
-  imageUrl: string;
-  duration: number;
-}
+import { fetchUserData } from "@/repoLayer/fetchUserData";
+import { Product } from "@/types/customTypes";
+import { fetchCartItems } from "@/repoLayer/fetchCartItems";
+import { deleteFromCart } from "@/repoLayer/deleteFromCart";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
@@ -31,18 +24,10 @@ const CartPage = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchCartItems = async () => {
+    const fetch = async () => {
       setLoading(true);
       try {
-        // Get user data
-        const userResponse = await axios.get("/api/getUserData");
-        const { cartItem } = userResponse.data;
-
-        // Get cart items
-        const cartResponse = await axios.post("/api/getAllCartItem", {
-          productIds: cartItem,
-        });
-        setCartItems(cartResponse.data);
+        fetchCartItems(setCartItems); 
       } catch (error: any) {
         toast({
           title: "Error fetching cart items",
@@ -56,12 +41,12 @@ const CartPage = () => {
       }
     };
 
-    fetchCartItems();
-  }, [toast]);
+    fetch();
+  }, []);
 
   const handleDelete = async (productId: string) => {
     try {
-      await axios.delete("/api/removeItemFromCart", { data: { productId } });
+      await deleteFromCart(productId)
       setCartItems(cartItems.filter((item) => item._id !== productId));
       toast({
         title: "Product removed from cart",
@@ -79,7 +64,7 @@ const CartPage = () => {
 
   const calculateTotalPrice = () => {
     const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-    const gst = subtotal * 0.18; // Assuming 18% GST
+    const gst = subtotal * 0.18;
     const total = subtotal + gst;
     return { subtotal, gst, total };
   };

@@ -7,7 +7,10 @@ import User from "@/models/userModel";
 export async function GET(request: NextRequest) {
   await dbConnect();
 
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
   if (!token) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,15 +19,16 @@ export async function GET(request: NextRequest) {
   const userId = token._id;
 
   try {
-    const user = await User.findById(userId).select('-password -role -isVerified -verifyCode -expiryTimeOTP -resetPasswordCode -expiryTimeResetPassword');
+    const user = await User.findById(userId).select(
+      "-password -role -isVerified -verifyCode -expiryTimeOTP -resetPasswordCode -expiryTimeResetPassword"
+    );
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     return NextResponse.json(user, { status: 200 });
-    
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "error while fetching user data", status: 500 });
   }
 }
