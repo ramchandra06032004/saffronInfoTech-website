@@ -146,7 +146,7 @@ const AdminOrdersPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-2">
+    <div className="flex flex-col items-center justify-center py-2 ">
       <h1 className="text-3xl mb-6 text-center">Admin Orders</h1>
       <div className="mb-4 ">
         <Select onValueChange={setFilterStatus}>
@@ -164,7 +164,7 @@ const AdminOrdersPage = () => {
       </div>
       {displayedOrders.length > 0 ? (
         displayedOrders.map((order) => (
-          <Card key={order._id} className="flex flex-col mb-4 ">
+          <Card key={order._id} className="flex flex-col mb-4 w-1/3">
             <CardHeader>
               <CardTitle className="text-1xl">Order ID: {order._id}</CardTitle>
             </CardHeader>
