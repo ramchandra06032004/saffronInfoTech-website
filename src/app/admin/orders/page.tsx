@@ -22,7 +22,6 @@ import {
 const AdminOrdersPage = () => {
   const { toast } = useToast();
   const [orders, setOrders] = useState<any[]>([]);
-  const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<string>("all");
 
@@ -83,16 +82,6 @@ const AdminOrdersPage = () => {
     fetchOrders();
   }, [toast]);
 
-  useEffect(() => {
-    if (filterStatus === "all") {
-      setFilteredOrders(orders);
-    } else {
-      setFilteredOrders(
-        orders.filter((order) => order.orderStatus === filterStatus)
-      );
-    }
-  }, [filterStatus, orders]);
-
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     try {
       const response = await axios.post("/api/changeStatusOfOrder", {
@@ -142,6 +131,12 @@ const AdminOrdersPage = () => {
     }
   };
 
+  const displayedOrders =
+    filterStatus === "all"
+      ? orders
+      : orders.filter((order) => order.orderStatus === filterStatus);
+
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -167,8 +162,8 @@ const AdminOrdersPage = () => {
           </SelectContent>
         </Select>
       </div>
-      {filteredOrders.length > 0 ? (
-        filteredOrders.map((order) => (
+      {displayedOrders.length > 0 ? (
+        displayedOrders.map((order) => (
           <Card key={order._id} className="flex flex-col mb-4 ">
             <CardHeader>
               <CardTitle className="text-1xl">Order ID: {order._id}</CardTitle>
@@ -185,14 +180,14 @@ const AdminOrdersPage = () => {
               <p>Type: {order.type}</p>
               <p>Payment Mode: {order.paymentMode}</p>
               <h3 className="font-bold mt-4">User Details</h3>
-              <p>Name: {order.user.userName}</p>
-              <p>Email: {order.user.email}</p>
+              <p>Name: {order.user?.userName}</p>
+              <p>Email: {order.user?.email}</p>
               <h3 className=" font-bold mt-4">Power Plant Details</h3>
-              <p>Government ID: {order.powerPlant.govId}</p>
-              <p>Name of Owner: {order.powerPlant.nameOfOwner}</p>
-              <p>Mobile Number: {order.powerPlant.mobileNumber}</p>
-              <p>Address: {order.powerPlant.address}</p>
-              <p>Capacity: {order.powerPlant.capacity} KW</p>
+              <p>Government ID: {order.powerPlant?.govId}</p>
+              <p>Name of Owner: {order.powerPlant?.nameOfOwner}</p>
+              <p>Mobile Number: {order.powerPlant?.mobileNumber}</p>
+              <p>Address: {order.powerPlant?.address}</p>
+              <p>Capacity: {order.powerPlant?.capacity} KW</p>
             </CardContent>
             <CardFooter>
               <div className="flex flex-col gap-2">

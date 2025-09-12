@@ -8,7 +8,6 @@ export const fetchCartItems = async (callbackFunction: CallableFunction) => {
     const cartResponse = await axios.post("/api/getAllCartItem", {
         productIds: cartItem,
     });
-    console.log("////////////////",cartItem);
     callbackFunction(cartResponse.data);
   } catch (error: any) {
     throw new Error(
