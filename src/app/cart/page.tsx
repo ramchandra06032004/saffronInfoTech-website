@@ -27,7 +27,7 @@ const CartPage = () => {
     const fetch = async () => {
       setLoading(true);
       try {
-        fetchCartItems(setCartItems); 
+        fetchCartItems(setCartItems);
       } catch (error: any) {
         toast({
           title: "Error fetching cart items",
@@ -35,8 +35,7 @@ const CartPage = () => {
             error.response?.data?.message ||
             "An error occurred while fetching cart items.",
         });
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -46,7 +45,7 @@ const CartPage = () => {
 
   const handleDelete = async (productId: string) => {
     try {
-      await deleteFromCart(productId)
+      await deleteFromCart(productId);
       setCartItems(cartItems.filter((item) => item._id !== productId));
       toast({
         title: "Product removed from cart",
@@ -83,34 +82,35 @@ const CartPage = () => {
             Your cart is empty
           </p>
         ) : (
-          <div>
-            <div className="flex flex-col items-center justify-center py-2">
-              <div className="md:grid-cols-2 lg:grid-cols-3">
-                {cartItems.map((product) => (
-                  <Card key={product._id} className="mb-4">
-                    <CardHeader>
-                      <CardTitle>{product.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p>{product.description}</p>
-                      <p>Price: ₹{product.price}</p>
-                      <p>In Stock: {product.countInStock}</p>
-                      <p>Duration: {product.duration} months</p>
-                    </CardContent>
-                    <CardFooter className="gap-3">
-                      <Button
-                        variant="outline"
-                        onClick={() => handleDelete(product._id)}
-                      >
-                        Remove from Cart
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div>
+          <div className="flex flex-col items-center justify-center">
+            <div className="md:grid-cols-2 lg:grid-cols-3 flex flex-col items-center justify-center ">
+              {cartItems.map((product) => (
+                <Card
+                  key={product._id}
+                  className="flex flex-col items-center w-2/3 mb-4"
+                >
+                  <CardHeader>
+                    <CardTitle>{product.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>{product.description}</p>
+                    <p>Price: ₹{product.price}</p>
+                    <p>In Stock: {product.countInStock}</p>
+                    <p>Duration: {product.duration} months</p>
+                  </CardContent>
+                  <CardFooter className="gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => handleDelete(product._id)}
+                    >
+                      Remove from Cart
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
             </div>
 
-            <Card className="">
+            <Card className="w-2/3">
               <CardHeader>
                 <CardTitle className="text-green-600">Price Estimate</CardTitle>
               </CardHeader>

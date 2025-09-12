@@ -74,11 +74,11 @@ const ProductsPage = () => {
           <SkeletonComp />
         </div>
       ) : (
-        <>
+        <div>
           <h1 className="text-3xl mb-6 text-center ">Products</h1>
-          <div className="md:grid-cols-2 lg:grid-cols-3 ">
+          <div className="md:grid-cols-2 lg:grid-cols-3 flex flex-col items-center ">
             {products.map((product) => (
-              <Card key={product._id} className="mb-4">
+              <Card key={product._id} className="mb-4 w-1/2">
                 <CardHeader>
                   <CardTitle>{product.name}</CardTitle>
                 </CardHeader>
@@ -99,7 +99,7 @@ const ProductsPage = () => {
               </Card>
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
