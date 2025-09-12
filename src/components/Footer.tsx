@@ -45,7 +45,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center text-gray-400">
-          &copy; {new Date().getFullYear()} Saffron RenewTech LLP. All rights reserved.
+          &copy; {new Date().getFullYear()} Urjaa.App LLP. All rights reserved.
         </div>
       </div>
     </footer>
