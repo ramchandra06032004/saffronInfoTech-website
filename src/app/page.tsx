@@ -32,7 +32,7 @@ export default function Home() {
             accessible to all.
           </p>
           <p className="font-bold mt-3">
-            Aatmaram Sawant <br />
+            Ramchandra Mulik <br />
             Managing Director
           </p>
         </div>

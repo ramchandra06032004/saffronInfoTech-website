@@ -69,7 +69,7 @@ export default function SignupPage() {
       <Card className="p-8 rounded shadow-md w-full max-w-md border">
         <CardHeader>
           <div className="flex justify-center mb-6">
-            <img src="/logo.png" alt="Logo" className="h-12" />
+            <img src="/logo-dark.png" alt="Logo" className="h-12" />
           </div>
           <CardTitle>
             {loading ? "Processing" : "Sign Up"}

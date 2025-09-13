@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'react-hot-toast';
 import { signOut, useSession } from 'next-auth/react';
 import { IoIosMenu } from "react-icons/io";
+import Image from 'next/image';
 function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
@@ -42,7 +43,7 @@ function Navbar() {
     <nav className="p-4 md:p-6 shadow-md ">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-xl font-bold">
-        Urjaa.App
+          <Image src="/logo-dark.png" alt="Logo" width={150} height={50} />
         </Link>
         {isMobile ? (
           <div className="relative">
