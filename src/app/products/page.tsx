@@ -56,11 +56,11 @@ const ProductsPage = () => {
         title: "Product added to cart",
         description: "Product has been added to cart successfully",
       });
-    } catch (error: any) {
+    } catch (error: any) {      
       toast({
-        title: "Error adding to cart",
+        title: "Error while adding to cart",
         description:
-          error.response?.data?.message ||
+          error.response?.data?.error ||
           "An error occurred while adding the product to the cart.",
       });
     }

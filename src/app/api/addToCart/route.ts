@@ -12,7 +12,10 @@ export async function POST(request: NextRequest) {
   });
 
   if (!token) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Please login to add product to cart" },
+      { status: 401 }
+    );
   }
 
   const userId = token._id;
@@ -28,7 +31,6 @@ export async function POST(request: NextRequest) {
     user.cartItem.push(productId);
     await user.save();
 
-    
     return NextResponse.json(
       { message: "Product added to cart successfully" },
       { status: 200 }
