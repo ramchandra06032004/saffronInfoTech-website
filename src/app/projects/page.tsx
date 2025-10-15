@@ -91,7 +91,7 @@ const ProjectsPage = () => {
       <h1 className="text-3xl font-bold mb-8 text-center">Our Projects</h1>
       <div className="flex flex-col gap-8">
         {projects.map((project, index) => (
-          <Card key={index} className="shadow-lg mx-4">
+          <Card key={index} className="shadow-lg mx-4 p-4">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">{project.siteName}</CardTitle>
             </CardHeader>
@@ -100,7 +100,16 @@ const ProjectsPage = () => {
               <p className="text-gray-400 mb-4">{new Date(project.date).toLocaleDateString()}</p>
               <div className="flex flex-wrap gap-4 justify-center ">
                 {project.images.map((image, imgIndex) => (
-                  <Image key={imgIndex} src={image.src} alt={image.alt} className="rounded-lg w-1/4 " />
+                  <div
+                    key={imgIndex}
+                    className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 aspect-square overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 ))}
               </div>
             </CardContent>
